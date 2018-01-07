@@ -1,0 +1,82 @@
+{% extends 'chronos/base.html' %}
+
+
+{% block body %}
+  {% csrf_token %}
+  <section class="section">
+    <div class="container">
+      <aside class="menu">
+        {% if user.is_authenticated %}
+        <h1 class="title">
+            Hello, {{ user.username|title }}
+          </h1>
+          <p class="subtitle">
+            Here are your tasks
+          </p>
+          {% if cat_pairs %}
+            {% for cats in cat_pairs %}
+            <div class="tile is-ancestor">
+              {% for cat in cats %}
+                <div class="tile is-parent is-6">
+                    <div class="card category-card">
+                        <header class="card-header category-header">
+                          <p class="card-header-title is-size-4">
+                            {{ cat.name }}
+                          </p>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            {% for task in cat.task_set.all %}
+                              <div class="md-checkbox">
+                                <input id="tid_{{ task.pk }}" type="checkbox" {% if task.is_finished %} checked {% endif %} class="task-box">
+                                <label for="tid_{{ task.pk }}" class="is-size-6">{{task.name}}</label>
+                              </div>
+                          {% endfor %}
+                          </div>
+                        </div>
+                        <footer class="card-footer">
+                          <div class="card-footer-item">
+                              <a class="toggle-add">Add Task</a>
+                              <div class="hidden task-form">
+                                  <div class="field has-addons">
+                                      <div class="control">
+                                          <input class="input" type="text" placeholder="Task Name" required>
+                                        </div>
+                                        <div class="control">
+                                          <button class="button is-dark add-task" id="cid_{{ cat.pk }}">
+                                            Add
+                                          </button>
+                                        </div>
+                                        <div class="control">
+                                            <button class="button is-danger cancel-button">
+                                              Cancel
+                                            </button>
+                                        </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </footer>
+                      </div>
+                </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          {% else %}
+            <p>You have no categories. Please <a href="{% url 'chronos:add_category' %}">click here</a> to add one.</p>
+          {% endif %}
+        {% else %}
+          <h1 class="title">
+            Welcome to Chronosal
+          </h1>
+          <p class="subtitle">
+            A simple to-do list application
+          </p>
+          <p class="is-size-5">
+              Please <a href="{% url 'auth_login' %}" class="has-text-weight-semibold">log in</a> to look at your tasks
+          </p>
+        {% endif %}
+      </aside>
+    </div>
+  </section>
+{% endblock %}
+

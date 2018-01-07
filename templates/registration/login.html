@@ -1,0 +1,69 @@
+{% extends 'chronos/base.html' %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <section class="section has-text-centered">
+        <h1 class="is-bold is-size-3">Login</h1>
+    </section>
+    <section class="section">
+        <div class="container box">
+                {% if form.non_field_errors %}
+                <article class="message is-danger">
+                        <div class="message-header">
+                          <p>Errors</p>
+                          <button class="delete" aria-label="delete"></button>
+                        </div>
+                        <div class="message-body">
+                          {% for error in form.non_field_errors %}
+                            {{ error|escape }}
+                          {% endfor %}
+                        </div>
+                </article>
+                {% endif %}
+            <form action="." method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label is-size-5">Username</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Enter your username" value="" id="id_username" name="username">
+                            <span class="icon is-small is-left">
+                            <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                        <div class="form-errors">
+                            {% for error in form.username.errors %}
+                                <span>{{ error|escape }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label is-size-5">Password</label>
+                        <div class="control">
+                            <input class="input" type="password" id="id_password" placeholder="Enter your password" name="password">
+                        </div>
+                        <div class="form-errors">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error|escape }}</span>
+                                {% endfor %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="button is-dark is-medium is-outlined center" value="Submit">Log In</button>
+                    <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+    </section>
+
+
+
+    <div class="has-text-centered">
+        <p>
+            Not a member?
+            <a href="{% url 'registration_register' %}">Register</a>
+        </p>
+    </div>
+{% endblock %}

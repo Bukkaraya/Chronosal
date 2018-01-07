@@ -1,0 +1,54 @@
+{% extends 'chronos/base.html' %}
+{% load widget_tweaks %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body %}
+    <section class="section has-text-centered has-text-centered">
+        <h1 class="is-bold is-size-3 ">Register Here</h1>
+    </section>
+    <div class="container box">
+        {% if form.non_field_errors %}
+            <article class="message is-danger">
+                    <div class="message-header">
+                        <p>Errors</p>
+                        <button class="delete" aria-label="delete"></button>
+                    </div>
+                    <div class="message-body">
+                        {% for error in form.non_field_errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                    </div>
+            </article>
+        {% endif %}
+    <form action="." method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field">
+                    <label class="label is-size-5">{{ field.label }}</label>
+                    <div class="control">
+                        {{ field|add_class:"input" }}
+                    </div>
+                    <div class="form-errors">
+                        {% for error in field.errors %}
+                            <span>{{ error|escape }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <input type="submit" value="Register" class="button is-medium is-dark has-text-centered">
+    </form>
+    </div>
+    
+    
+    <div class="has-text-centered">
+        <p>
+            Already a member?
+            <a href="{% url 'auth_login' %}">Login</a>
+        </p>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'chronos/base.html' %}
+
+{% block title_block %}
+    Add Category
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+                <h1 class="title">Add a category</h1>
+                <div>
+                    <form action="/chronos/add_category/" method="post" id="category_form">
+                        {% csrf_token %}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+
+                        {% for field in form.visible_fields %}
+                            {{ field.errors }}
+                            {{ field.help_text }}
+                            {{ field }}
+                        {% endfor %}
+                        <input type="submit" value="Create Category">           
+                    </form>
+                </div>
+        </div>
+    </section>
+{% endblock %}
