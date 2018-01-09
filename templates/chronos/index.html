@@ -23,6 +23,23 @@
                           <p class="card-header-title is-size-4">
                             {{ cat.name }}
                           </p>
+                          <a class="card-header-icon" aria-label="remove">
+                            <span class="icon">
+                              <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                          <div class="modal remove-modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                              <div class="box has-text-centered">
+                                <p class="section is-size-4 has-text-black">Are you sure you want to remove the category?</p>
+                                <a class="button is-danger is-medium">Yes</a>
+                                <a class="button is-dark is-medium">No</a>
+                              </div>
+                              
+                            </div>
+                            <button class="modal-close is-medium" aria-label="close"></button>
+                          </div>
                         </header>
                         <div class="card-content">
                           <div class="content">
@@ -30,6 +47,9 @@
                               <div class="md-checkbox">
                                 <input id="tid_{{ task.pk }}" type="checkbox" {% if task.is_finished %} checked {% endif %} class="task-box">
                                 <label for="tid_{{ task.pk }}" class="is-size-6">{{task.name}}</label>
+                                <a class="icon remove-task">
+                                  <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
                               </div>
                           {% endfor %}
                           </div>

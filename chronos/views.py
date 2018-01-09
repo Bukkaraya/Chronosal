@@ -51,7 +51,7 @@ def add_task(request):
 
     return JsonResponse(data)
 
-
+@login_required
 def toggle_completion(request):
     t_id = request.POST.get('t_id')[4:]
     if t_id is None:
@@ -67,3 +67,16 @@ def toggle_completion(request):
     data = {'set_finished': task.is_finished}
 
     return JsonResponse(data)
+
+
+
+@login_required
+def remove_task(request):
+    t_id = request.POST.get('t_id')[4:]
+    if t_id is None:
+        return JsonResponse({'task_removed': False})
+
+    task = Task.objects.get(pk=int(t_id))
+    task.delete()
+
+    return JsonResponse({'task_removed': True})

@@ -51,6 +51,11 @@ $(document).ready(function(){
                     var taskHTML = document.createElement('div');
                     var taskLabel = document.createElement('label');
                     var checkbox = document.createElement('input');
+                    var removeButton = document.createElement('a');
+                    $(removeButton).addClass('icon remove-task');
+                    var icon = document.createElement('i');
+                    $(icon).addClass('fa fa-times').attr('aria-hidden', 'true');
+                    $(removeButton).append(icon);
                     var t_id = 'tid_' + data.t_id;
                     
                     $(taskHTML).addClass('md-checkbox');
@@ -58,6 +63,7 @@ $(document).ready(function(){
                     $(taskLabel).addClass('is-size-6').attr('for', t_id).html(task_name);
                     $(taskHTML).append(checkbox);
                     $(taskHTML).append(taskLabel);
+                    $(taskHTML).append(removeButton);
                     $(element).closest('.card-footer').prev().children('.content').append(taskHTML);
                 }
             }
@@ -65,6 +71,26 @@ $(document).ready(function(){
 
     });
 
+
+    $(document).on('click', '.remove-task', function(){
+        var t_id = $(this).siblings('.task-box').attr('id');
+        var element = this;
+
+        $.ajax({
+            type: 'POST',
+            url: '/chronos/remove_task',
+            data: {
+                't_id': t_id,
+                'csrfmiddlewaretoken': getCookie('csrftoken'),
+            },
+            dataType: 'json',
+            success: function(data){
+                if(data.task_removed){
+                    $(element).parent().remove();
+                }
+            }
+        });
+    });
 
 
     $('.navbar-burger').click(function(){
@@ -81,5 +107,9 @@ $(document).ready(function(){
         $(this).closest('.task-form').toggleClass('hidden');
         $(this).closest('.task-form').prev().toggleClass('hidden');
     });
+
+
+
+
 
 });

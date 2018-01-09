@@ -19,8 +19,39 @@
     border-radius: 20px 20px 0 0;
 }
 
+.category-header-icon{
+    display: block;
+}
+
+.icon i{
+    color: white;
+}
+
 .category-header p{
     color: #FFFBFF;
+}
+
+
+.category-options{
+    display: inline-block;
+    position: relative;
+}
+
+.category-options a{
+    color: white;
+}
+
+.md-checkbox a{
+    display: none;
+    float: right;
+}
+
+.md-checkbox:hover a{
+    display: block;
+}
+
+.md-checkbox i{
+    color: hsl(0, 0%, 21%);
 }
 
 .hidden{
