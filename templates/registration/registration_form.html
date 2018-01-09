@@ -6,8 +6,21 @@
 {% endblock %}
 
 {% block body %}
-    <section class="section has-text-centered has-text-centered">
-        <h1 class="is-bold is-size-3 ">Register Here</h1>
+    <section class="section has-text-centered">
+        <h1 class="is-bold is-size-3">Register Here</h1>
+        <article class="container message is-info has-text-left">
+            <div class="message-header">
+              <p>Info</p>
+            </div>
+            <div class="message-body">
+              <ul>
+                <li>Your password can't be too similar to your other personal information.</li>
+                <li>Your password must contain at least 10 characters.</li>
+                <li>Your password can't be a commonly used password.</li>
+                <li>Your password can't be entirely numeric.</li>
+              </ul>
+            </div>
+        </article>
     </section>
     <div class="container box">
         {% if form.non_field_errors %}
@@ -49,6 +62,4 @@
             <a href="{% url 'auth_login' %}">Login</a>
         </p>
     </div>
-
-
 {% endblock %}
